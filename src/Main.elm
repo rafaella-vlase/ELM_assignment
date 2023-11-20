@@ -69,7 +69,7 @@ update msg model =
 fetchRepos : Cmd Msg
 fetchRepos =
     Http.get
-        { url = "YOUR_GITHUB_API_URL" -- Replace with the actual GitHub API URL
+        { url = "YOUR_GITHUB_API_URL" 
         , expect = Http.expectJson GotRepos Repo.decodeRepoList
         }
 
