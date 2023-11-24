@@ -44,19 +44,19 @@ sortByInterval events =
 view : Event -> Html Never
 view event =
     let
-        eventClasses =
+        evtClasses =
             [ ("event", True)
             , ("event-important", event.important)
             ]
 
-        descriptionClasses =
+        descClasses =
             [ ("event-description", True) ]
     in
-    div [classList eventClasses]
+    div [classList evtClasses]
         [ h2 [class "event-title"] [text event.title]
         , p [class "event-category"] [categoryView event.category]
         , p [class "event-interval"] [Interval.view event.interval]
-        , p [classList descriptionClasses] [event.description]
+        , p [classList descClasses] [event.description]
         , case event.url of
             Just link ->
                 a [class "event-url", href link] [text "Event Link"]

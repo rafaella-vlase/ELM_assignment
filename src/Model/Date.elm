@@ -74,21 +74,6 @@ monthsBetween (Date dA) (Date dB) =
 
 
 
--- monthsBetween : Date -> Date -> Maybe Int
--- monthsBetween (Date dA) (Date dB) =
---     case (dA.month, dB.month) of
---         (Just mA, Just mB) ->
---             Just <| abs (monthsBetweenMonths mA mB) + (abs (dA.year - dB.year) * 12)
-
---         (Nothing, Nothing) ->
---             Just <| abs (dA.year - dB.year) * 12
-
---         (Just _, Nothing) ->
---             Nothing
-
---         (Nothing, Just _) ->
---             Nothing
-
 
 {-| Compares two dates.
 First, dates are compared by the year field. If it's equal, the month fields are used as follows:
@@ -112,8 +97,8 @@ First, dates are compared by the year field. If it's equal, the month fields are
 compare : Date -> Date -> Order
 compare (Date d1) (Date d2) =
     let
-        yearComparison = Basics.compare d1.year d2.year
-        monthComparison =
+        yearCmp = Basics.compare d1.year d2.year
+        monthCmp =
             case (d1.month, d2.month) of
                 (Just m1, Just m2) ->
                     compareMonth m1 m2
@@ -127,10 +112,10 @@ compare (Date d1) (Date d2) =
                 (Nothing, Nothing) ->
                     EQ
     in
-    if yearComparison /= EQ then
-        yearComparison
+    if yearCmp /= EQ then
+        yearCmp
     else
-        monthComparison
+        monthCmp
 
 
 

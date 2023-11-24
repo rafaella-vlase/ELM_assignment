@@ -97,10 +97,10 @@ If the `start` field is equal, the they are compare by the `end` fields:
 compare : Interval -> Interval -> Order
 compare (Interval intA) (Interval intB) =
     let
-        startComparison =
+        startCompare =
             Date.compare intA.start intB.start
 
-        endComparison =
+        endCompare =
             case (intA.end, intB.end) of
                 (Nothing, Nothing) ->
                     EQ
@@ -114,24 +114,16 @@ compare (Interval intA) (Interval intB) =
                 (Just dateA, Just dateB) ->
                     Date.compare dateA dateB
     in
-    if startComparison /= EQ then
-        startComparison
+    if startCompare /= EQ then
+        startCompare
     else
-        endComparison
+        endCompare
 
 
 -- view : Interval -> Html msg
 -- view interval =
 --     div[][]
 
-lengthAsString : Interval -> String
-lengthAsString interval =
-    case length interval of
-        Nothing ->
-            "Invalid Interval"
-
-        Just (years, months) ->
-            String.fromInt years ++ " years and " ++ String.fromInt months ++ " months"
 
 view : Interval -> Html msg
 view interval =

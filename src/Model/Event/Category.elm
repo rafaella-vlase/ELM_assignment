@@ -19,9 +19,9 @@ eventCategories =
 {-| Type used to represent the state of the selected event categories
 -}
 type SelectedEventCategories
-    = AllSelected
-    | NoneSelected
-    | SomeSelected (List EventCategory)
+    = AllAreSelected
+    | NoneAreSelected
+    | SomeAreSelected (List EventCategory)
 
 
 {-| Returns an instance of `SelectedEventCategories` with all categories selected
@@ -31,7 +31,7 @@ type SelectedEventCategories
 -}
 allSelected : SelectedEventCategories
 allSelected =
-    AllSelected
+    AllAreSelected
     --Debug.todo "Implement Model.Event.Category.allSelected"
 
 {-| Returns an instance of `SelectedEventCategories` with no categories selected
@@ -41,7 +41,7 @@ allSelected =
 -}
 noneSelected : SelectedEventCategories
 noneSelected =
-    NoneSelected
+    NoneAreSelected
     --Debug.todo "Implement Model.Event.Category.noneSelected"
 
 {-| Given a the current state and a `category` it returns whether the `category` is selected.
@@ -52,15 +52,14 @@ noneSelected =
 isEventCategorySelected : EventCategory -> SelectedEventCategories -> Bool
 isEventCategorySelected category current =
     case current of
-        AllSelected ->
+        AllAreSelected ->
             True
 
-        NoneSelected ->
+        NoneAreSelected ->
             False
 
-        SomeSelected selectedCategories ->
+        SomeAreSelected selectedCategories ->
             List.member category selectedCategories
-    --Debug.todo "Implement Model.Event.Category.isEventCategorySelected"
 
 
 {-| Given an `category`, a boolean `value` and the current state, it sets the given `category` in `current` to `value`.
@@ -73,27 +72,26 @@ isEventCategorySelected category current =
 set : EventCategory -> Bool -> SelectedEventCategories -> SelectedEventCategories
 set category value current =
     case current of
-        AllSelected ->
+        AllAreSelected ->
             if value then
-                AllSelected
+                AllAreSelected
             else
-                SomeSelected (List.filter (\cat -> cat /= category) eventCategories)
+                SomeAreSelected (List.filter (\categ -> categ /= category) eventCategories)
 
-        NoneSelected ->
+        NoneAreSelected ->
             if value then
-                SomeSelected [category]
+                SomeAreSelected [category]
             else
-                NoneSelected
+                NoneAreSelected
 
-        SomeSelected selectedCategories ->
+        SomeAreSelected selectedCategories ->
             if value then
                 if List.member category selectedCategories then
                     current
                 else
-                    SomeSelected (category :: selectedCategories)
+                    SomeAreSelected (category :: selectedCategories)
             else
-                SomeSelected (List.filter (\cat -> cat /= category) selectedCategories)
-    --Debug.todo "Implement Model.Event.Category.set"
+                SomeAreSelected (List.filter (\categ -> categ /= category) selectedCategories)
 
 
 checkbox : String -> Bool -> EventCategory -> Html ( EventCategory, Bool )
@@ -129,4 +127,4 @@ categoryToString category =
 
         Award ->
             "Award"
-    --Debug.todo "Implement the Model.Event.Category.view function"
+

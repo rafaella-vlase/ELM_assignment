@@ -59,6 +59,6 @@ decodeRepo =
         (De.field "stargazers_count" De.int)
 
 
-decodeRepoList : De.Decoder (List Repo)
-decodeRepoList =
+decodeRepoMakeList : De.Decoder (List Repo)
+decodeRepoMakeList =
     De.list decodeRepo

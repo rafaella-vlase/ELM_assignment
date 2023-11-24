@@ -33,7 +33,7 @@ main =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , fetchRepos
+    , getRepos
     )
 
 
@@ -46,13 +46,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetRepos ->
-            ( { model | repos = [] }, fetchRepos )
+            ( { model | repos = [] }, getRepos )
 
         GotRepos (Ok repos) ->
             ( { model | repos = repos }, Cmd.none )
         
         GotRepos (Err err) ->
-            -- Handle error if needed, you may want to log the error or update a field indicating an error
             (model, Cmd.none)
 
         SelectEventCategory category ->
@@ -66,11 +65,11 @@ update msg model =
             )
 
 
-fetchRepos : Cmd Msg
-fetchRepos =
+getRepos : Cmd Msg
+getRepos =
     Http.get
-        { url = "YOUR_GITHUB_API_URL" 
-        , expect = Http.expectJson GotRepos Repo.decodeRepoList
+        { url = "https://api.github.com/octocat" 
+        , expect = Http.expectJson GotRepos Repo.decodeRepoMakeList
         }
 
 
